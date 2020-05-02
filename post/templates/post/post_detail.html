@@ -1,0 +1,30 @@
+{% extends "post/base.html" %}
+{% block content %}
+    <article class="media content-section">
+        <div class="media-body">
+            <div class="article-metadata">
+                <a class="text-muted mr-2" href="{% url 'user_posts' post.seller.username %}">{{ post.seller }}</a>
+                <small class="text-muted">{{ post.date_posted|date:"N d, Y" }}</small>
+                {% if post.seller == user%}
+                    <div>
+                        <a class="btn btn-secondary btn-sm mt-1 mb-1 " href="{% url 'post_update' post.id %}">Edit</a>
+                        <a class="btn btn-danger btn-sm mt-1 mb-1 mr-10" href="{% url 'post_delete' post.id %}">delete</a>
+                    </div>
+                {% endif %}
+            </div>
+            <h2><a class="article-title" href="{%url 'movie_posts' post.movie %}">{{ post.movie }}</a></h2>
+            <div class="float-right mr-2 ">{{post.language}} | {{post.movie_type}}</div>
+            <a class="article-content">{{post.tickets}} tickets</a>
+            <br>
+            <div class="float-right mr-2"><b>Show time: </b>{{post.show_date|time:"g:i A"}}</div>
+            <a class="article-content" href="#"><b>Theater: </b>{{ post.theater }}</a>
+            <br>
+            <div class="float-right"><b>Show date: </b>{{post.show_date|date:"D, d N"}}  </div>
+            <p class="article-content"><b>Location: </b>{{ post.theater_location }}</p>
+            
+            <p class="article-content"><b>Seats: </b>{{ post.seatNo }}</p>
+            <p class="article-content"><b>cast: </b>{{ post.cast }}</p>
+
+        </div>
+    </article>
+{% endblock content %}

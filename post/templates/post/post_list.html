@@ -1,0 +1,78 @@
+{% extends "post/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}    
+    <form method='GET'>
+        {% csrf_token %}
+
+        <div class="form-row">
+            <div class="form-group col-md-3 mb-0">
+                {{ filter.form.tickets|as_crispy_field }}
+            </div>
+            <div class="form-group col-md-4 mb-0">
+                {{ filter.form.language|as_crispy_field }}
+            </div>
+            <div class="form-group col-md-5 mb-0">
+                {{ filter.form.movie|as_crispy_field }}
+            </div>
+            <div class="form-group col-md-3 mb-0">
+                {{ filter.form.district|as_crispy_field }}
+            </div>
+            <div class="form-group col-md-4 mb-0">
+                {{ filter.form.theater_location|as_crispy_field }}
+            </div>
+            <div class="form-group col-md-5 mb-0">
+                {{ filter.form.theater|as_crispy_field }}
+            </div>
+        </div>
+        <button type="submit" style="margin-left:85%;" class='btn btn-primary mb-4 '>search</button>
+        
+    </form>
+
+    {% for post in filter.qs %}
+        <article class="media content-section" onclick="window.location.href='{% url 'post_detail' post.id %}';"  >
+            <div class="media-body">
+                <div class="article-metadata">
+                    <a class="text-muted mr-2" href="{%url 'user_posts' post.seller.username %}">{{ post.seller }}</a>
+                    <small class="text-muted">{{ post.date_posted|date:"N d, Y" }}</small>
+                    <div class="float-right">{{post.district}}</div>
+                </div>
+                <h2><a class="article-title" href="{%url 'movie_posts' post.movie %}">{{ post.movie }}</a></h2>
+                <div class="float-right">{{post.language}} {{post.movie_type}}</div>
+                <a>{{post.tickets}} tickets</a>
+                <br>
+                <div class="float-right">{{post.show_date|time:"g:i A"}}</div>
+                <a class="article-content" href="#">{{ post.theater }}</a>
+                <br>
+                <div class="float-right">{{post.show_date|date:"N d, Y"}}</div>
+                <p class="article-content">{{ post.theater_location }}</p>
+            </div>
+        </article>
+    {% endfor %}
+
+    {% if is_paginated %}
+
+    {% if page_obj.has_previous %}
+        <a class="btn btn-outline-info mb-4"href="?page=1">First</a>
+        <a class="btn btn-outline-info mb-4"href="?page={{ page_obj.previous_page_number }}">Previous</a>
+    {% endif %}
+
+    {% for page in page_obj.paginator.page_range %}
+
+        {% if page_obj.number == page%}
+        <a class="btn btn-info mb-4"href="?page={{page}}">{{page}}</a>
+        {% elif page > page_obj.number|add:'-3' and page < page_obj.number|add:'3' %}
+        <a class="btn btn-outline-info mb-4"href="?page={{page}}">{{page}}</a>
+        {% endif %}
+
+    {% endfor %}
+
+    {% if page_obj.has_next %}
+        <a class="btn btn-outline-info mb-4"href="?page={{ page_obj.next_page_number }}">Next</a>
+        <a class="btn btn-outline-info mb-4"href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+    {% endif %}
+
+
+{% endif %}
+
+{% endblock content %}
+
