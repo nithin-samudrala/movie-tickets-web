@@ -7,8 +7,8 @@
                 <small class="text-muted">{{ post.date_posted|date:"N d, Y" }}</small>
                 {% if post.seller == user%}
                     <div>
-                        <a class="btn btn-secondary btn-sm mt-1 mb-1 " href="{% url 'post_update' post.id %}">Edit</a>
-                        <a class="btn btn-danger btn-sm mt-1 mb-1 mr-10" href="{% url 'post_delete' post.id %}">delete</a>
+                        <a style="width: 8%;" class="btn btn-secondary btn-sm mt-1 mb-1 " href="{% url 'post_update' post.id %}">Edit</a>
+                        <a style="width: 10%;" class="btn btn-danger btn-sm mt-1 mb-1 ml-2" href="{% url 'post_delete' post.id %}">delete</a>
                     </div>
                 {% endif %}
             </div>
@@ -21,9 +21,18 @@
             <br>
             <div class="float-right"><b>Show date: </b>{{post.show_date|date:"D, d N"}}  </div>
             <p class="article-content"><b>Location: </b>{{ post.theater_location }}</p>
-            
-            <p class="article-content"><b>Seats: </b>{{ post.seatNo }}</p>
-            <p class="article-content"><b>cast: </b>{{ post.cast }}</p>
+            <p ><b>Seats: </b>{{ post.seatNo }}</p>
+            <p ><b>Cast: </b>{{ post.cast }}</p>
+            {% if post.seller != user%}
+                <p><b>Seller discription:</b> {{ post.seller }}</p>
+                <p>{{profile.phoneNo}}</p>
+                <a class="btn btn-primary " href="tel:{{profile.phoneNo}}" style="padding:10px;background-color:rgb(106, 228, 211)">
+                    {{ post.seller }} <span class="glyphicon glyphicon-earphone" style="padding-left:10px; padding-right:10px;"></span>{{profile.phoneNo}}
+                 </a>
+                <div>
+                    <a style="margin-left:85%; padding: 9px; width: 90px;" class="btn btn-primary btn-sm mt-1 mb-1 " href="{% url 'payments' profile.pk %}">{{ post.cost }}</a>               
+                </div>
+            {% endif %}
 
         </div>
     </article>

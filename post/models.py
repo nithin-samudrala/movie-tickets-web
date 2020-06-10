@@ -11,6 +11,7 @@ class Post(models.Model):
     date_posted = models.DateTimeField(default=timezone.now)
     release_date=models.DateTimeField(blank=True,null=True)
     show_date=models.DateTimeField()
+    cost=models.IntegerField()
     no_tickets=[
         ('1','1'),
         ('2','2'),
@@ -82,5 +83,5 @@ class Post(models.Model):
     def __str__(self):
         return self.movie
 
-    def get_absolute_url(self):
+    def get_absolute_url(self):                                                #when new post is creeated it shows that specific post
         return reverse('post_detail' ,kwargs={'pk': self.pk})

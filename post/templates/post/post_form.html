@@ -5,7 +5,7 @@
         <form method="POST">
             {% csrf_token %}
             <fieldset class="form-group">
-                <legend class="border-bottom mb-4"> Post </legend>              
+                <legend class="border-bottom mb-4"> Sell </legend>              
 
                 {{ form.movie|as_crispy_field }}
                 <form class="form-horizontal">
@@ -19,8 +19,11 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="form-group col-md-6 mb-0">
+                        <div class="form-group col-md-3 mb-0">
                             {{ form.tickets |as_crispy_field }}
+                        </div>
+                        <div class="form-group col-md-3 mb-0">
+                            {{ form.cost |as_crispy_field }}
                         </div>
                         <div class="form-group col-md-6 mb-0">
                             {{ form.seatNo |as_crispy_field }}
@@ -53,7 +56,7 @@
 
             </fieldset>
             <div class="form-group">
-                <button class="btn btn-outline-info"type="submit">Post</button>
+                <button style="margin-left:85%;" class="btn btn-outline-info"type="submit">Post</button>
             </div>
         </form>
     </div>  
